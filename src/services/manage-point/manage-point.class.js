@@ -14,10 +14,10 @@ exports.ManagePoint = class ManagePoint {
   }
 
   async create (data, params) {
-    if ((data.userEmail === undefined) || (data.action === undefined) || (data.pointQty === undefined))
+    if ((data.email === undefined) || (data.action === undefined) || (data.point === undefined))
       throw new errors.BadRequest('Request is not valid');
 
-    const users = await this.app.service('users').find({ query: { userEmail: data.userEmail }, paginate: false });
+    const users = await this.app.service('users').find({ query: { userEmail: data.email }, paginate: false });
     if (users.length === 0) throw new errors.BadRequest('User is not found');
     const user = users[0];
 
@@ -26,7 +26,7 @@ exports.ManagePoint = class ManagePoint {
     let point = points[0];
 
     const currentPoint = point.pointQty;
-    const upcPoint = Number(data.pointQty);
+    const upcPoint = Number(data.point);
     if (upcPoint < 1) throw new errors.BadRequest('Invalid point transaction');
     let newPoint = 0, trx = {};
 
@@ -41,7 +41,7 @@ exports.ManagePoint = class ManagePoint {
         throw new errors.BadRequest('Redeem failed. Point is not enough to redeem');
     }
     else if (data.action === 'shop') {
-      newPoint = currentPoint + Number(data.pointQty);
+      newPoint = currentPoint + Number(data.point);
       trx = await this.app.service('transactions').create({
         pointId: point.id, trxAction: 'shop', trxPointQty: upcPoint, trxPointCalc: upcPoint, trxPointTotal: newPoint
       });
