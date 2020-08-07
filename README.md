@@ -36,7 +36,7 @@ Simply run `npm test` and all your tests in the `test/` directory will be run.
 
 ## API Documentation
 
-### API Create UserPoint
+#### API Create UserPoint
 Call API `Create UserPoint` to create user and point data together.
 API `Create UserPoint` need `email` and `name` to create User and Point.
 Below is an example of the parameters when calling API `Create UserPoint`.
@@ -48,10 +48,11 @@ Below is an example of the parameters when calling API `Create UserPoint`.
 }
 ```
 
-### API Manage Points
+#### API Manage Points
 Call API `Manage Points` to add and reduce user points.
 API `Manage Points` need `email`, `action`, and `point` to add and reduce user points.
 This API only accept `shop` and `redeem` for `action` parameter.
+Parameter `shop` to add user points and `redeem` to reduce user points.
 Below is an example of the parameters when calling API `Manage Points`.
 
 ```
@@ -72,13 +73,13 @@ OR
 }
 ```
 
-### API Get List of Users
+#### API Get List of Users
 Call API `Get List of Users` to see all user data.
 
-### API Get List of Points
+#### API Get List of Points
 Call API `Get List of Points` to see all point data.
 
-### API Get List of Transactions
+#### API Get List of Transactions
 Call API `Get List of Transactions` to see all transaction data.
 
 ## Scaffolding
