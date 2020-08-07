@@ -28,16 +28,24 @@ exports.ManagePoint = class ManagePoint {
     const currentPoint = point.pointQty;
     const upcPoint = Number(data.pointQty);
     if (upcPoint < 1) throw new errors.BadRequest('Invalid point transaction');
-    let newPoint = 0;
+    let newPoint = 0, trx = {};
 
     if (data.action === 'redeem') {
-      if (currentPoint >= upcPoint)
+      if (currentPoint >= upcPoint) {
         newPoint = currentPoint - upcPoint;
+        trx = await this.app.service('transactions').create({
+          pointId: point.id, trxAction: 'redeem', trxPointQty: upcPoint, trxPointCalc: (-1 * upcPoint), trxPointTotal: newPoint
+        });
+      }
       else
         throw new errors.BadRequest('Redeem failed. Point is not enough to redeem');
     }
-    else if (data.action === 'shop')
+    else if (data.action === 'shop') {
       newPoint = currentPoint + Number(data.pointQty);
+      trx = await this.app.service('transactions').create({
+        pointId: point.id, trxAction: 'shop', trxPointQty: upcPoint, trxPointCalc: upcPoint, trxPointTotal: newPoint
+      });
+    }
     else
       throw new errors.BadRequest('Action is not recognize');
 
@@ -46,7 +54,7 @@ exports.ManagePoint = class ManagePoint {
     return {
       status: 'success',
       message: '',
-      data: { user, point }
+      data: { user, point, trx }
     };
   }
 
