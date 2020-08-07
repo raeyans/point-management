@@ -62,6 +62,7 @@ Below is an example of the parameters when calling API `Manage Points`.
 
     OR
 
+
     ```
     {
         "email": "raeyans@gmail.com",
@@ -71,9 +72,7 @@ Below is an example of the parameters when calling API `Manage Points`.
     ```
 
 Call API `Get List of Users` to see all user data.
-
 Call API `Get List of Points` to see all point data.
-
 Call API `Get List of Transactions` to see all transaction data.
 
 ## Scaffolding
